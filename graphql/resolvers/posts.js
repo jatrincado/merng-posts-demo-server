@@ -4,9 +4,9 @@ const { AuthenticationError } = require("apollo-server");
 
 module.exports = {
   Query: {
-    async getPosts() {
+    async getPosts(_, { offset, limit }) {
       try {
-        const posts = await Post.find().sort({ createdAt: -1 });
+        const posts = await Post.find().sort({ createdAt: -1 }).skip(offset).limit(limit);
         return posts;
       } catch (err) {
         throw new Error(err);
